@@ -1,195 +1,360 @@
 #include <stdio.h>
-int A[100];
-void nhapmang  ( int A[100], int n);
-void xuatmang  ( int A[100], int n);
-void max       (int A[100],int n);
-void tich      (int A[100],int n);
-void dsnt      (int A[100],int n);
-int kiemtraSNT (int a);
-void timx      (int A[100],int n,int x);
-void sapxep    (int A[100],int n);
-void chenx     (int A[100],int n, int x);
-void xoa       (int A[100],int n);
+
+void nhap       (int a[100][100], int m, int n);
+void xuat       (int a[100][100],int m, int n);
+void max        (int a[100][100],int m,int n);
+void min        (int a[100][100],int m,int n);
+int dem         (int n);
+void snt        (int a[100][100],int m,int n);
+void timx       (int a[100][100],int m, int n);
+void yenngua    (int a[100][100],int m, int n);
+void sx         (int a[100][100],int m,int n);
+void tong       (int a[100][100],int m,int n);
+void chan       (int a[100][100],int m,int n);
+void le         (int a[100][100],int m,int n);
+void tich       (int A[100][100],int B[100][100]);
 
 int main()
-
 {
-	int n,x;
-	printf ("Nhap so phan tu cho mang la mot so nguyen :"); scanf("%d",&n);
-	while (n>99)
-	{
-		printf("\nNhap lai n:"); scanf("%d",&n);
-	}
-	
-	nhapmang(A,n);
-	xuatmang(A,n);
-	max(A,n);
-	tich(A,n);
-	dsnt(A,n);
-	printf("\n\nNhap x="); scanf("%d",&x);
-	timx(A,n,x);
-	sapxep(A,n);
-	chenx(A,n,x);
-	n++;
-    xoa(A,n);
-}
-
-
-void nhapmang (int A[100], int n)//nhap mang
-{
-	printf("\n\nNhap gia tri cac phan tu cho mang A :");
-	int i;
-	for (i=0;i<n;i++)
-	{
-		printf("\n\nNhap gia tri cho phan tu A[%d]=",i); scanf("%d", &A[i]);
-	}
-}
-
-void xuatmang ( int A[100], int n)//xuat mang
-{
-	printf("\n\nXuat gia tri cac phan tu cho mang A :");
-	int i;
-	for (i=0;i<n;i++)
-	{
-		printf("\n\nGia tri cua phan tu A[%d]=%d",i,A[i]);
-	}
-
-}
-
-
-void max(int A[100], int n)// tim gia tri lon nhat
-{
-	int i,j,gtln=0;
-	for(i=0;i<n;i++)
-	{
-		if (gtln <= A[i]) gtln = A[i];
-		if (gtln <= A[i]) j=i;
-	}
-	printf("\n\nGia tri lon nhat trong mang la gia tri %d cua phan tu A[%d]",gtln,j);
-}
-
-void tich (int A[100],int n)// tinh tich cua mang
-{
-    int i;
-	long tich=1;
-	for (i=0;i<n;i++)
-	{
-		tich=tich*A[i];
-	}
-	printf("\n\nTich cac phan tu trong mang =%d",tich);
-}
-
-int kiemtraSNT (int a)
-{
-	int i,dem=0;
-	for(i=2;i<=a;i++)
-	{
-		if (a%i==0) dem++;
-	}
-	return dem;
-}
-
-void dsnt(int A[100],int n)//dem so nguyen to va tinh tong cac snt
-{
-	int i,j,dem=0;
-	int tong=0;
-	int demsnt=0;
-	for(i=0;i<n;i++)
-	{
-		if (kiemtraSNT(A[i])==1) demsnt++; 
-		if (kiemtraSNT(A[i])==1) tong=tong+A[i];
-	
-		
-	}
-	printf("\n\nCo %d phan tu la so nguyen to trong mang A",demsnt);
-	printf("\n\nTong cac phan tu la so nguyen to trong mang A= %d",tong);
-}
-
-
-void timx (int A[100], int n,int x)//tim phan tu bang x
-{
-	int i,dem=0;
-	for (i=0;i<n;i++)
-	{
-		if (A[i]==x) printf("\n\nGia tri %d cua phan tu A[%d] bang gia tri cua x",x,i);
-		if (A[i]==x) dem++;
-	}
-	if (dem==0) printf("\n\nKhong co gia tri cua phan tu nao trong mang A bang x");
-}
-
-
-
-void sapxep (int A[100],int n)//sap xep mang tang dan
-{
-  int MIN;
-    for(int i=0; i<n-1; i++)
-	{
-        for(int j=i+1;j<n;j++)
-		{
-           if(A[i]>A[j])
-			{
-            MIN=A[i];
-            A[i]=A[j];
-            A[j]=MIN; 
-            }
-        }
-    }
-    printf("\n\nSap xep lai mang theo gia tri tang dan :");
-    for(int i=0;i<n;i++)
+	int a[100][100];//Khai bao ma tran a
+	int A[100][100];//Khai bao ma tran A
+	int B[100][100];//Khai bao ma tran B
+	int m,n; //Nhap so dong so cot
+    printf("Nhap so dong cho mang: "); scanf("%d",&m);
+    while (m<0||m>100)
     {
-    	printf("\nA[%d]=%d",i,A[i]);
+    	printf("\nNhap so qua lon! Nhap lai so dong cho mang:"); scanf("%d",&m);
+    }
+    printf("\nNhap so cot cho mang: "); scanf("%d",&n);
+    while (n<0||n>100)
+    {
+    	printf("\nNhap so qua lon! Nhap lai so cot cho mang:"); scanf("%d",&n);
+    }
+    
+    nhap(a,m,n);//2
+    xuat(a,m,n);//3
+    max(a,m,n);//4
+    min(a,m,n);//4
+    snt(a,m,n);//5
+    timx(a,m,n);//6
+    yenngua(a,m,n);//7
+    sx(a,m,n);//8
+    tong(a,m,n);//9
+    chan(a,m,n);//10
+    le(a,m,n);//11
+    tich(A,B);//12
+}
+
+
+void nhap (int a[100][100], int m, int n)//Nhap ma tran a
+{
+     for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+		   printf("\nNhap a[%d][%d]=",i,j); scanf("%d",&a[i][j]);
+		}
+	 }
+}
+
+
+void xuat (int a[100][100], int m, int n)//Xuat ma tran a
+{
+     for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+		   printf("   %d   ",a[i][j]);
+		   
+		}
+		printf("\n\n");
+	 }
+}
+
+
+void max (int a[100][100],int m,int n)// Tim gia tri max trong a
+{
+    int tam=0,x,y;
+    for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+	       if (a[i][j]>=tam) 
+	       {
+		   tam = a[i][j];
+		   x=i;
+		   y=j;
+		   }
+		}
+	}
+	printf("\nPhan tu lon nhat trong mang a la a[%d][%d] = %d \n",x,y,a[x][y]);
+}
+
+
+void min (int a[100][100],int m,int n)// Tim gia tri min trong a
+{
+    int tam,x,y;
+    tam=a[0][0];
+    for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+	       if (a[i][j]<=tam) 
+	       {
+		   tam = a[i][j];
+		   x=i;
+		   y=j;
+		   }
+		}
+	}
+	printf("\nPhan tu nho nhat trong mang a la a[%d][%d] = %d \n",x,y,a[x][y]);
+}
+
+
+int dem(int n)// thu xem gia tri cua a co phai so nguyen to
+{
+	int demm=0;
+    for(int i=1;i<=n;i++)
+    {
+	   if (n%i==0) demm++;
+	}
+	return demm;
+}
+
+
+void snt (int a[100][100],int m,int n)//Dem va tinh tong so nguyen to
+{
+     int x=0,tong=0;
+     for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+		   if(dem(a[i][j])==2) 
+		   {
+		     printf("\nGia tri %d cua phan tu a[%d][%d] la so nguyen to\n",a[i][j],i,j);
+		     tong = tong + a[i][j];
+		     x++;
+		   }
+		}
+	 }
+	 if (x==0) printf("\nKhong co gia tri nao trong ma tran a la so nguyen to");
+	 else      printf("\nVay co %d gia tri trong mang a la so nguyen to va tong cua chung bang : %d",x,tong);  
+}
+
+
+
+void timx (int a[100][100],int m, int n)
+{
+     int x,y=0;
+     printf("\n\nNhap gia tri cho X="); scanf("%d",&x);
+     for(int i=0;i<m;i++)
+     {
+	    for(int j=0;j<n;j++)
+	    {
+		   if (a[i][j] == x) 
+		   {
+		      printf("\n\nGia tri X xuat hien tren ma tran tai vi tri a[%d][%d]",i,j);
+		      y++;
+		   }
+		}
+	 }
+	 if (y==0) printf ("\n\nGia tri cua X khong xuat hien trong ma tran a !");
+}
+
+
+void yenngua (int a[100][100],int m, int n)//tim gia tri la yen ngua
+{
+	 int x,y,max;
+	 int dem=0,demm=0;
+     for (int k=0;k<m;k++)
+     {
+     	max=a[k][0];
+	    for(int i=0;i<n;i++)
+        {
+	       if ( a[k][i]<=max) 
+	       {
+		           max = a[k][i];
+		           x=i;
+		   }
+		}
+		for (int j=0;j<m;j++)
+		{
+		   if (max < a[j][x]) 
+		    {
+			  dem++;
+			}
+		}
+	    if (dem==0)
+			  {    printf ("\n\nPhan tu a[%d][%d] la YEN NGUA !",k,x);
+			       demm++;
+		      }
+	    dem=0;
+	 } 
+	 if (demm==0) printf("\n\nKhong co gia tri nao la YEN NGUA trong ma tran a !");
+}
+
+
+void sx (int a[100][100],int m,int n)//Sap xep ma tran a tang dan tu tren xuong & tu trai qua phai
+{
+	int tam,tamm;
+    for(int i=0;i<n;i++)//sap xep theo thu tu tang dan tu tren xuong
+    {
+	   for(int j=0;j<m-1;j++)
+	   {
+	      for(int k=j+1;k<m;k++)
+	      {
+		     if (a[j][i]>a[k][i])
+		     { 
+		        tam=a[j][i];
+		        a[j][i]=a[k][i];
+		        a[k][i]= tam;
+			 }
+		  }
+		
+	   }
+	}
+	for(int l=0;l<m;l++)//sap xep theo thu tu tang dan tu trai qua phai
+    {
+	   for(int p=0;p<n-1;p++)
+	   {
+	      for(int q=p+1;q<n;q++)
+	      {
+		     if (a[l][p]>a[l][q])
+		     { 
+		        tamm=a[l][p];
+		        a[l][p]=a[l][q];
+		        a[l][q]= tamm;
+			 }
+		  }
+		
+	   }
+	}
+	printf("\n\nMang sau khi sap xep la : \n\n");
+	for(int r=0;r<m;r++)
+     {
+	    for(int s=0;s<n;s++)
+	    {
+		   printf("  %d  ",a[r][s]);
+		}
+		printf("\n\n");
+	 }  
+	 
+}
+
+
+void tong(int a[100][100],int m,int n)//Tinh tong cac phan tu nam tren duong cheo chinh
+{
+	 int x=0;
+	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{  
+		   if (i==j) x=x+a[i][j]; 		
+	 	}
+	 }
+	 printf("\n\nTong cac phan tu nam tren duong cheo chinh cua ma tran a = %d",x);
+}
+
+
+
+void chan(int a[100][100],int m,int n)//Dem cac so chan nam trong tam ggiac duoi cua duong cheo chinh
+{
+	int dem=0;
+	for(int i=0;i<m;i++)
+	{
+	 	for(int j=0;j<n;j++)
+	 	{
+		   if (i==j) 
+		   {
+		   	  for(int k=j+1;k<n;k++)
+		   	  {
+		   	  	 if (a[i][k]%2==0) dem++;
+		   	  }
+		   }
+		}
+    }
+    if (dem==0) printf("\n\nKhong co phan tu nao la so chan nam trong tam giac tren cua duong cheo chinh cua ma tran a !");
+    else        printf("\n\nCo %d phan tu la so chan nam trong tam giac tren cua duong cheo chinh cua ma tran a ma khong ke duong cheo chinh !",dem);
+}
+
+
+void le(int a[100][100],int m,int n)//In ra cac so le trong tam giac tren cua duong cheo phu
+{
+	printf("\n\nCac so le nam trong tam giac duoi cua duong cheo phu :");
+	printf("\n\n");
+	for(int i=0;i<m;i++)
+	{
+	 	for(int j=0;j<n;j++)
+	 	{
+		   if (j+i==n-1)
+		   {
+		       for(int k=j;k<n;k++)
+		   	   {
+		   	   	  if (a[i][k]%2==1) 
+		   	   	  {
+		   	   	  	 printf("  %d  ",a[i][k]);
+		   	   	  }
+		   	   	  
+			   }
+		   }
+	    }
     }
 }
 
 
-void chenx(int A[100],int n, int x)//chen gia tri cua x vao mang
+
+void tich(int A[100][100],int B[100][100])//Nhap hai ma tran A va B. Tinh tong va tich hai ma tran
 {
-     printf("\n\nChen gia tri %d cua x vao phan tu A[%d]",x,n);
-     A[n]=x;
-     printf("\n\nMang A sau khi chen x:");
-     for(int i=0;i<n+1;i++)
-     {
-     	printf("\n\nA[%d]=%d",i,A[i]);
+   	 printf("\n\nXay Dung ma tran A va B :");
+	 int m,n,tich=1,tong=0;
+	 printf("\n\nNhap so cot cho  ma tran A va B = "); scanf("%d",&m);
+	 printf("\n\nNhap so dong cho  ma tran A va B = "); scanf("%d",&n);
+	 printf("\n\nXay Dung ma tran A:");
+	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{
+	 	   	printf("\n\nA[%d][%d]=",i,j); scanf("%d",&A[i][j]);
+		} 
+	 }
+	 printf("\n\nXay Dung ma tran B:");
+	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{
+	 	   	printf("\n\nB[%d][%d]=",i,j); scanf("%d",&B[i][j]);
+		} 
+	 }
+	 printf("\n\nMa tran A:\n\n");
+ 	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{
+	 	   	printf(" %d ",A[i][j]);
+		}
+		printf("\n\n");
      }
+	 printf("\n\nMa tran B:\n\n");
+ 	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{
+	 	   	printf(" %d ",B[i][j]);
+		} 
+		printf("\n\n");
+     }
+	 
+	 for(int i=0;i<m;i++)
+	 {
+	 	for(int j=0;j<n;j++)
+	 	{
+	 	   tong=tong+A[i][j]+B[i][j];
+	 	   tich=tich*A[i][j]*B[i][j];
+	 	}
+	 }
+	 printf("\n\nTong cac phan tu cua ma tran A va B = %d",tong);
+     printf("\n\nTich cac phan tu cua ma tran A va B = %d",tich); 
+     
 }
 
-void xoa(int A[100],int n)//xoa cac phan tu co gia tri bang k
-{
-	int k,dem=0;
-	printf("\n\nNhap k="); scanf("%d",&k);
-	for(int f=0;f<n;f++)
-	{
-		for(int i=0;i<n;i++)
-        {
-	       if(A[i]==k)
-	       {
-	   	     dem++;
-	         for(int j=i;j<n-1;j++)
-	         {
-		        A[j]=A[j+1];
-		     }
-		     n--;
-	      }
-	   }
-	}
-	if (dem==0)
-	{
-	   printf("\n\nKhong co phan tu nao trong mang A co gia tri bang k, mang A khong thay doi !");
-	   printf("\n\nMang A :");
-	   for(int i=0;i<n;i++)
-	   {
-	      printf("\n\nA[%d] = %d",i,A[i]);
-	   }
-	}
-	else
-	{
-	   printf("\n\nMang A sau khi xoa cac phan tu co gia tri bang k :");
-	   for(int i=0;i<n;i++)
-	   {
-	      printf("\n\nA[%d] = %d",i,A[i]);
-	   }
-	}
-	
-}
-	
 
